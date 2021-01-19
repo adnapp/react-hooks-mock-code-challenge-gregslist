@@ -6,6 +6,7 @@ function App() {
 
   const [allListings, setAllListings] = useState([])
   const [search, setSearch] = useState("")
+  const [sorted, setSorted] = useState(false)
 
 
   useEffect(() => {
@@ -27,19 +28,31 @@ function App() {
       setAllListings(postDelete)
     })}
 
-    function handleSearch(incomingSearch){
+  function handleSearch(incomingSearch){
       setSearch(incomingSearch)
+  }
+
+  function handleSorted(sortBoolean){
+    setSorted(sortBoolean)
+    if (sortBoolean) {
+      setAllListings( allListings.sort((A,B)=> A.description.localeCompare(B.description))
+      )
     }
+  }
+
+  
 
 
   const searchedObjects = allListings.filter(listing => {
     return listing.description.toLowerCase().includes(search.toLowerCase())
   } )
+  
+  
 
 
   return (
     <div className="app">
-      <Header handleSearch={handleSearch}/>
+      <Header handleSearch={handleSearch} handleSorted={handleSorted}/>
       <ListingsContainer allListings={searchedObjects} onDelete={onDelete}/>
     </div>
   );

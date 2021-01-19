@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 
-function Search({handleSearch}) {
+function Search({handleSearch, handleSorted}) {
   function handleSubmit(e) {
     e.preventDefault();
     console.log("submitted");
@@ -8,8 +8,16 @@ function Search({handleSearch}) {
   }
 
   const [search, setSearch] = useState("")
+  const [sorted, setSorted] = useState(false)
+
+  function handleSort(){
+    setSorted(!sorted)
+    handleSorted(!sorted)
+  }
+
 
   return (
+    <>
     <form className="searchbar" onSubmit={handleSubmit}>
       <input
         type="text"
@@ -20,6 +28,14 @@ function Search({handleSearch}) {
       />
       <button type="submit">🔍</button>
     </form>
+    <input
+      type="checkbox"
+      name="abc-order"
+      checked={sorted}
+      onChange={handleSort}
+    /> 
+      <label for="abc-order"> ABC by location</label>
+    </>
   );
 }
 
